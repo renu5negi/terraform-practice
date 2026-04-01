@@ -45,14 +45,14 @@ resource "aws_security_group" "my_security_group" {
 
 # ec2 instance
 resource "aws_instance" "my_ec2_instance" {
-  ami             = "ami-0ec10929233384c7f" # ubuntu ami in us-east-1 region
-  instance_type   = "t3.micro"
+  ami             = var.ec2_ami # ubuntu ami in us-east-1 region
+  instance_type   = var.ec2_instance_type
   key_name        = aws_key_pair.my_key_pair.key_name
-  security_groups = [aws_security_group.my_security_group.name]
+  security_groups = [aws_security_group.my_security_group.name]  # interpolation syntax to get the security group name
 
 
   root_block_device {
-    volume_size = 8
+    volume_size = var.ec2_root_volume_size
     volume_type = "gp3"
 
   }
